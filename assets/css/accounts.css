@@ -1,0 +1,99 @@
+.log-form-container{
+
+	width: inherit;
+	height: fit-content;
+	padding-block-end: 1rem;
+	padding-block-start: 1rem;
+	margin-top: 10rem;
+	position: absolute;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+
+#log_text{
+	text-align: center;
+	font-weight: 500;
+	margin-top: -3rem;
+	margin-bottom: 2rem;
+	letter-spacing: 2px;
+}
+
+form{
+	margin-left: 4rem;
+
+
+}
+
+
+#login_email{
+	width: 15rem;
+}
+
+
+#login_pass{
+	width: 15rem;
+}
+
+#log_btn{
+	margin-left: 6rem;
+}
+
+
+#no_acc{
+	text-align: center;
+	margin-left: -2.8rem;
+	margin-top: 10px;
+}
+
+
+
+
+/*REGISTER FORM STYLING*/
+
+.reg-form-container{
+	position: absolute;
+	margin-top: 6rem;
+	margin-left: 1rem;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+
+.reg-form-container form{
+	margin-top: 3rem;
+	margin-left: 2.8rem;
+}
+
+#sign_text{
+	font-weight: 500;
+	margin-top: 1rem;
+	margin-bottom: -2.5rem;
+	margin-left: .5rem;
+	letter-spacing: 2px
+}
+
+.helptext{
+	display: none;
+}
+
+
+
+#id_email,#id_username,#id_password1,#id_password2{
+	width: 15rem;
+	height: 2.5rem;
+	border-radius: .3rem;
+	margin-top: 1rem;
+	border-width: .2px;
+}
+
+#reg_btn{
+	margin-top: 1rem;
+	margin-left: 4rem;
+	margin-bottom: 1rem;
+}
+
+.errorlist li{
+	font-size:.6rem;
+	margin-left: -4rem;
+	font-weight: 600;
+
+}

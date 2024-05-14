@@ -1,0 +1,18 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block title %}MeDo-Logout{% endblock %}
+
+
+
+{% block content %}
+
+
+        <div class="log-form-container">
+            <form class="logout-form" action="" method="post">
+                <p id="loggedOut_text">You have logged out,log in<a href=" {% url 'login' %} "> Here</a> </p>
+            </form>
+        </div>
+
+
+
+{% endblock  %}

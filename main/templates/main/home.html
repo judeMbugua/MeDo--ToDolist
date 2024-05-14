@@ -1,0 +1,500 @@
+{% extends "main/base.html" %}
+
+{% load static %}
+
+{% block title %}MeDo-Home{% endblock  %}
+
+
+{% block content %}
+
+<div class="home-container">
+	<button class="add-button"  id="add-button">
+		<img class="add-image" src=" {% static 'icons/plus.png' %}">
+	</button>
+	<p id="newlistText">Create ToDo</p>
+
+	{% if user.is_authenticated %}
+	<div class="account-info">
+		<img class="account-image" src="{% static 'icons/user.png' %}">
+		<p class="account-name"> {{ user.username }} </p>
+	</div>
+
+	{% endif %}
+
+
+	<div class="createListPopup" id="popup">
+		<form method="POST">
+			{% csrf_token %}
+			{{ context.newListForm.as_table }}
+			<button id="new-list-btn">Create</button>
+		</form>
+	</div>
+
+
+	<div class="tasks-view" id="tasks-view">
+
+
+		{% if context.todos_count > 0 %}
+			
+		
+			<form class="select-form" method="POST">
+				{% csrf_token %}
+			<select name="todos" id="todos">
+				{% for todo in context.todos  %}
+					<option id="select_option" value="{{ todo.id }}"
+					{% if todo == context.selected_list %}
+						selected 
+					{% endif %}
+					>{{ todo }}</option>
+				{% endfor %}
+
+			</select>
+			<button type="submit" class="filter-btn" id="filter-btn">View</button>
+			<button type="submit" class="delete-btn" id="delete-btn">Delete</button>		
+			</form>
+
+		{% endif %}
+
+
+		<div class="tasks-container">
+
+			{% if context.tasks_count < 1 and context.todos_count > 0 %}
+			    			
+				<div class="taskEmpty-container" id="taskEmpty-container">
+					<p id="addTasks_text">You have no tasks.</p>
+					<img id="emptyTask_image" src="{% static 'icons/no-task.png' %}">
+				</div>
+
+			{% endif %}
+
+		<form class="list-form" method="POST">
+			{%csrf_token%}
+			<ul class="tasks" id="tasks">
+
+
+				{% for 	task in context.tasks  %}
+					
+				<li class="task"  id="task">
+					<div class='task-div'>
+						<div class="text-div">
+							<p id="task_text"><input type="text" name="task-input" id="task-input{{task.id}}" class="task-input" data-index = "{{ task.id }}" value="{{ task.text }}" readonly></p>
+						</div>
+						<div class="edits-container">
+							<input  class="completed-checkBox" type="checkbox"
+							{% if task.completed %}
+								checked
+							{% endif %}
+							data-index="{{ task.id }}"
+							>
+							<button class="edit-button"  id="edit-button" data-index="{{ task.id }}">
+								<img class="image" src="{% static 'icons/pencil.png' %}">
+							</button>
+							<button class="del-button"  id="del-button" data-index="{{ task.id }}">
+								<img class="image" src="{% static 'icons/delete.png' %}">
+							</button>
+						</div>
+					</div>
+				</li>
+				{% endfor %}
+					
+			</ul>
+		
+
+		</form> 
+
+		{% if context.todos_count < 1 %}
+
+		<div class="noTasks-container">
+			<p id="noTasks_text">Create a Todolist and add tasks. </p>
+			<img class="noTask-image" src="{% static 'icons/noTask.png' %}">
+		</div>	
+		{% endif %}
+
+
+
+		{% if context.todos_count > 0 %}
+		
+		<button class="add-task-btn"  id="addTask-button">
+		<a href="#new-task-form"><img class="addTask-image" src=" {% static 'icons/plus.png' %}"></a>
+		</button>			    
+					
+		{% endif %}			
+
+
+		<div class="new-task-form" id="new-task-form">
+			<form method="POST">
+				{% csrf_token %}
+				{{ context.newTaskForm.as_table }}
+				<button id="task-add-btn">Add</button>			
+			</form>
+		</div>
+
+		</div>
+
+	</div>
+
+
+		{% if context.todos_count > 0 and context.tasks_count > 0  %}
+		
+			<form method="POST">
+				{% csrf_token %}
+				<button class="list-save-btn" id="list-save-btn" type="submit">Save Changes</button>
+			</form>			    
+							
+		{% endif %}		
+
+
+</div>
+
+
+
+<script >
+
+//send a post request to create new list
+//opted to put this code within the html file since the django url tag doesn't work in js file
+$(document).on('click', '#new-list-btn', function(e){
+
+
+	if($('#id_name').val() == ""){
+		alert("Please enter the new to do list name!!");
+		return false;
+	}
+
+
+	e.preventDefault(); //prevents elements default operations like auto submitting btn
+	$.ajax({
+		//the method and url to be used
+		type: "POST",  					  //type of request
+		url : "{% url 'createNewList' %}", //the url to be used so that the correct view is called
+
+		//the data to be sent using POST
+		data : {
+			list_name : $("#id_name").val(),
+			csrfmiddlewaretoken : '{{ csrf_token }}',
+			action : 'post'  //use this 'action' to check id this data packet is POSTED
+		},
+
+        success: function(json){
+            location.reload()
+           
+        },
+
+
+        error : function(xhr,errmsg,err){
+        	
+        }		
+	})
+})
+
+
+
+
+// add a task to a todoList
+$(document).on('click', '#task-add-btn', function(e){
+
+	if($('#id_text').val() == ""){
+		alert("Please enter the new to do list name!!");
+		return false;
+	}
+
+	e.preventDefault(); //prevents elements default operations like auto submitting btn
+	$.ajax({
+		//the method and url to be used
+		type: "POST",  					  //type of request
+		url : "{% url 'addTask' %}", //the url to be used so that the correct view is called
+
+		//the data to be sent using POST
+		data : {
+			task_text : $("#id_text").val(),
+			completed : $('#id_completed').is(":checked"),
+			current_listID : $('#todos option:selected').val(),
+			csrfmiddlewaretoken : '{{ csrf_token }}',
+			action : 'post'  //use this 'action' to check id this data packet is POSTED
+		},
+
+        success: function(data){
+        	//change the content of the tasks ul with the new updated content
+        	$('.tasks').html(data.tasks_html);
+
+        	task = document.getElementById("tasks");
+        	task.style.marginLeft = "-2.2rem";
+
+
+        	//clear task input and hide it
+        	let taskInput = document.getElementById('id_text');
+        	let taskContainer = document.getElementById("new-task-form");
+
+        	taskInput.value = "";
+        	taskContainer.style.display = "none";
+           
+        },
+
+
+        error : function(xhr,errmsg,err){
+        	
+        }		
+	})
+})
+
+
+
+//delete todo list
+$(document).on("click", "#delete-btn",function(e){
+	e.preventDefault();
+
+	$.ajax({
+		type : 'POST',
+		url : '{% url "deleteList" %}',
+
+		data : {
+			selected_list_id : $("#select_option").val(),
+			csrfmiddlewaretoken : '{{ csrf_token }}',
+			action : 'deleteList',
+
+		},
+
+
+		success : function(data){
+			location.reload();
+			alert("list deleted!");
+
+		},
+
+		error : function(xhr,errmsg,err){
+
+		}
+	})
+})
+
+
+// display the tasks of the selected list
+$(document).on('click', '#filter-btn', function(e){
+	e.preventDefault(); //prevents elements default operations like auto submitting btn
+	$.ajax({
+		//the method and url to be used
+		type: "POST",  					  //type of request
+		url : "{% url 'home' %}", //the url to be used so that the correct view is called
+
+		//the data to be sent using POST
+		data : {
+			current_listID : $('#todos option:selected').val(),
+			current_list : $('#todos option:selected').text(),
+			csrfmiddlewaretoken : '{{ csrf_token }}',
+			action : 'update_view',  //use this 'action' to check id this data packet is POSTED
+		},
+
+        success: function(data){
+        	//change the content of the tasks ul with the new updated content
+        	$('.tasks').html(data.tasks_html);
+
+        	task = document.getElementById("tasks");
+        	task.style.marginLeft = "-2.2rem";
+
+        	
+
+        },
+
+
+        error : function(xhr,errmsg,err){
+        	
+        }		
+	})
+})
+
+
+
+
+//delete a task
+$(document).on('click', '#del-button', function(e){
+	e.preventDefault(); //prevents elements default operations like auto submitting btn
+	$.ajax({
+		//the method and url to be used
+		type: "POST",  					  //type of request
+		url : "{% url 'deleteTask' %}", //the url to be used so that the correct view is called
+
+
+		//the data to be sent using POST
+		data : {
+			clickedTaskID  :  $(this).data("index"),
+			current_listID : $('#todos option:selected').val(),
+			csrfmiddlewaretoken : '{{ csrf_token }}',
+			action : 'deleteTask',  //use this 'action' to check id this data packet is POSTED
+		},
+
+        success: function(data){
+        	//change the content of the tasks ul with the new updated content
+        	$('.tasks').html(data.tasks_html);
+
+        	task = document.getElementById("tasks");
+           	task.style.marginLeft = "-2.2rem";
+
+           	count = parseInt(data.count);
+
+           	//reload page if all tasks are deleted to display no tasks image
+           	if(count < 1){
+           		location.reload();
+           	}
+ 	
+
+        },
+
+
+        error : function(xhr,errmsg,err){
+        	
+        }		
+	})
+})
+
+
+
+
+//edit task
+$(document).on('click', '#edit-button', function(e){
+	e.preventDefault(); //prevents elements default operations like auto submitting btn
+
+	//get the data index of the clicked edit buttn
+	var btnIndex =  $(this).data("index");
+	var idName = "task-input" + btnIndex;
+
+	$.ajax({
+		//the method and url to be used
+		type: "POST",  					  //type of request
+		url : "{% url 'editTask' %}", //the url to be used so that the correct view is called
+
+		//the data to be sent using POST
+		data : {
+
+			//get clicked task using its id
+			clickedTask : $('#idName').val(),
+			csrfmiddlewaretoken : '{{ csrf_token }}',
+			action : 'editTask',  //use this 'action' to check id this data packet is POSTED
+		},
+
+        success: function(data){
+        	//get the clicked task input and remove the readonly attribute
+        	const clicked_task = document.getElementById(idName);
+        	
+
+        	//remove readonly attribute
+        	clicked_task.removeAttribute('readonly');
+        	clicked_task.focus();
+
+        },
+
+
+        error : function(xhr,errmsg,err){
+        	
+        }		
+	})
+})
+
+
+
+
+
+//save changes after edit
+$(document).on('click', '#list-save-btn', function(e){
+	e.preventDefault(); //prevents elements default operations like auto submitting btn
+
+	//get editted task id
+	var taskInputs = [];
+
+	//get editted task text
+	var tasksText = [];
+
+	$('.task-input').each(function() {
+	    if(this.readOnly == false){
+	        var index = $(this).data("index");
+	        var text = $(this).val();
+	        if (typeof index !== 'undefined') {
+	            taskInputs.push(index);
+	            tasksText.push(text);
+	        }
+	    }
+	});
+
+
+	
+
+	
+
+	$.ajax({
+		//the method and url to be used
+		type: "POST",  					  //type of request
+		url : "{% url 'saveChanges' %}", //the url to be used so that the correct view is called
+	
+
+		//the data to be sent using POST
+		data : {
+
+			inputs : taskInputs,
+			texts : tasksText,
+			csrfmiddlewaretoken : '{{ csrf_token }}',
+			action : 'saveChanges',  //use this 'action' to check id this data packet is POSTED
+
+		},
+
+        success: function(data){
+
+   
+        },
+
+
+        error : function(xhr,errmsg,err){
+        	
+        }		
+	})
+})
+
+
+
+//update task status
+$(document).on('click','.completed-checkBox',function(e){
+
+
+	//to store ids of the clicked checkboxes
+	var clicked_checkbox_id = [];
+
+
+	//to store status of the clicked checkboxes
+	var clicked_checkbox_state = [];
+
+
+	//get the clicked checkbox id(index)
+	index = $(this).data("index");
+	clicked_checkbox_id.push(index);
+
+
+	//get the clicked checkbox state
+	status = $(this).is(" :checked");
+	clicked_checkbox_state.push(status);
+
+
+	$.ajax({
+		type:"POST",
+		url:"{% url 'updateStatus' %}",
+
+		data : {
+			checkbox_id : clicked_checkbox_id,
+			checkbox_status : clicked_checkbox_state,
+			csrfmiddlewaretoken : '{{ csrf_token }}',
+			action : "updateStatus",
+		},
+
+
+		success : function(data){
+		},
+
+
+        error : function(xhr,errmsg,err){
+        	
+        }
+	})
+
+})
+
+</script>
+
+
+
+{% endblock  %}

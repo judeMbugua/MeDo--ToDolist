@@ -1,0 +1,60 @@
+body{
+	padding: 0;
+	margin: 0;
+	scroll-behavior: smooth;
+	overflow: hidden;
+
+
+}
+
+.body-container{
+	width: 351px;
+	height: 100vh;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+	margin: auto;
+	margin-top: .2rem;
+}
+
+
+.head-container{
+	float: right;
+	margin-top: .5rem;
+	margin-right: .5rem;
+
+}
+
+
+.logo{
+	height: 3rem;
+	width: 3rem;
+	position: absolute;
+	margin-top: .8rem;
+	margin-left: .3rem;
+}
+
+.dropdown-item{
+	font-size: .9rem;
+}
+
+.titles{
+	position: absolute;
+	margin-top: .5rem;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+	width: inherit;
+}
+
+.titles #webName{
+	font-size: 1.2rem;
+	text-align: center;
+	margin-left: -1rem;
+
+}
+
+
+.titles #webSlogan{
+	margin-top: -1rem;
+	margin-left: -1rem;
+	text-align: center;
+
+}
+

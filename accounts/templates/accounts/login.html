@@ -1,0 +1,21 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block title %}MeDo-login{% endblock %}
+
+
+
+
+{% block content %}
+
+        <div class="log-form-container">
+            <p id="log_text">Log in to access your tasks.</p>
+            <form class="log-form" action="" method="post">
+                {% csrf_token %}
+                <input type="text" class="form-control" name="username" id="login_email" placeholder="Username" required> <br>
+                <input type="password" class="form-control" name="password" id="login_pass"  placeholder="Password" required> <br>
+                <button id="log_btn" type="submit" name="login" class="btn btn-success log_btn">Login</button>
+                <p id="no_acc">Don't have an account create one? <a href=" {% url "register" %} ">here</a> </p>
+            </form>
+        </div>
+
+{% endblock  %}
