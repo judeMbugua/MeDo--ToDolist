@@ -19,13 +19,13 @@ def home(request):
 
 
     #check if user has  todos
-    todos_count = len(ToDoList.objects.all())
+    todos_count = len(ToDoList.objects.filter(User=request.user.id))
 
 
     #check if user has tasks
     tasks_count = len(Task.objects.all())
 
-
+    print(tasks_count)
 
     # Get all todo Lists related to the current user
     todos = ToDoList.objects.filter(User= request.user.id)

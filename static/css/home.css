@@ -2,8 +2,10 @@
 .home-container{
 	width: inherit;
 	position: absolute;
-
 	height: 20rem;
+	margin-top: 1rem;
+	margin-top: auto;
+	height: fit-content;
 	margin-top: 6rem;
 }
 
