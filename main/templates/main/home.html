@@ -87,7 +87,7 @@
 							data-index="{{ task.id }}"
 							>
 							<button class="edit-button"  id="edit-button" data-index="{{ task.id }}">
-								Edit
+								<img class="image" src="{% static 'icons/pencil.png' %}">
 							</button>
 							<button class="del-button"  id="del-button" data-index="{{ task.id }}">
 								<img class="image" src="{% static 'icons/delete.png' %}">
@@ -115,7 +115,7 @@
 		{% if context.todos_count > 0 %}
 		
 		<button class="add-task-btn"  id="addTask-button">
-		<a><img class="addTask-image" src=" {% static 'icons/plus.png' %}"></a>
+		<img class="addTask-image" src=" {% static 'icons/plus.png' %}">
 		</button>			    
 					
 		{% endif %}			
