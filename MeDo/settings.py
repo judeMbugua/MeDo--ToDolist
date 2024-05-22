@@ -24,9 +24,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-s^r*+3ed31wxag*e649olc3#z%%&1td2v$1vm(-4#loaj-42sj"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
+
+
+#environment vars configuration
+import environ
+
+env = environ.Env()
+
+environ.Env.read_env()
 
 
 # Application definition
@@ -74,15 +82,13 @@ WSGI_APPLICATION = "MeDo.wsgi.application"
 
 
 # Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+
+#render postgres database configuration
+import dj_database_url
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    'default':dj_database_url.parse(env('DATABASE_URL'))
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
