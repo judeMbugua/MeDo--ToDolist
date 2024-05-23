@@ -2,14 +2,13 @@
 .home-container{
 	width: inherit;
 	position: absolute;
-
-	height: 20rem;
+	height: fit-content;
 	margin-top: 6rem;
 }
 
 .add-button{
 	border: none;
-	margin-left: 1rem;
+	margin-left: 1.5rem;
 	margin-top: 1.5rem;
 	position: absolute;
 }
@@ -27,10 +26,17 @@
 	margin-bottom: 5px;
 }
 
+#newlistText{
+	font-size: .8rem;
+	font-weight: 500;
+	margin-left: 1rem;
+}
+
 .account-info{
 	display: flex;
 	float: right;
 	margin-right: 2rem;
+	margin-top: -1rem;
 }
 
 .account-image{
@@ -47,18 +53,27 @@
 
 .createListPopup{
 	margin-top: 4rem;
-	margin-left: 1rem;
 	display: none;
 	margin-bottom: -50px;
 }
 
+
+.createListPopup > form > button{
+	border-radius: .3rem;
+}
+
+
 .tasks-view{
-	width: inherit;
+	width: 96%;
 	height: fit-content;
 	margin-top: 5rem;
 	padding-block-end: 1rem;
-	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+	margin-left: .5rem;
+
 }
+
+
+
 
 .tasks-view > form > select{
 	margin-left: -3.5rem;
@@ -79,13 +94,29 @@
 }
 
 
+.task-input{
+	border: none;
+
+
+}
+
+#task-input:focus{
+	border-bottom-style: dashed;
+	border-left: none;
+	border-right: none;
+	
+}
+
+
+
 .tasks-container{
 	width: 98%;
 	height: 15rem;
 	padding-block-end: 1rem;
 	margin: auto;
-	background-color:#e9fc92;
+	scrollbar-width: none;
 	overflow-y: auto;
+	background-color: white;
 
 }
 
@@ -104,6 +135,56 @@
 }
 
 
+
+/*confusing,,styles container the displays no todolist,,got tireed of renaming*/
+.noTasks-container{
+	margin-left: 1.5rem;
+	margin-top: -1rem;
+	height: 2rem;
+
+}
+
+.noTask-image{
+	height: 10rem;
+	margin-left: 2rem;
+}
+
+
+#noTasks_text{
+  font-family: "Roboto Mono";
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-size: 1.1rem;
+  font-style: normal;
+  text-align: center;
+}
+
+/*no to do list end*/
+
+
+
+
+/*styles no tasks container!!?*/
+#addTasks_text{
+	position: absolute;
+	margin-top: 1rem;
+	margin-left: 4rem;
+	font-size: 1.3rem;
+}
+
+#emptyTask_image{
+	width: 7rem;
+	height: 7rem;
+	position: absolute;
+	margin-top: 4rem;
+	margin-left: 7rem;
+}
+
+.taskEmpty-container{
+	display: block;
+}
+
+/*no tasks end*/
 
 .edits-container{
 	margin-right: .6rem;
@@ -129,7 +210,6 @@
 	border-width: .2px;
 	cursor: pointer;
 	padding-bottom: 5px;
-	background-color: inherit;
 	margin-left:12rem;
 
 
@@ -141,7 +221,6 @@
 	border-width: .2px;
 	cursor: pointer;
 	padding-bottom: 5px;
-	background-color: inherit;
 	float: right;
 	margin-left: .3rem;
 
@@ -149,6 +228,38 @@
 
 
 .add-task-btn{
-	float: right;
+	margin-left: 18rem;
+	margin-top: -19.5rem;
 	margin-right: .5rem;
+	border:none;
+
+
+
+}
+
+.addTask-image{
+	width: 1rem;
+	height: 1rem;
+	margin-bottom: 5px;
+	display: none;
+
+}
+
+
+.new-task-form{
+	display: none;
+}
+
+.list-save-btn{
+	float: left;
+	margin-left: -2rem;
+	border: none;
+	cursor: pointer;
+	border-radius: .4rem;
+	position: fixed;
+	margin-top: -1.5rem;
+}
+
+.list-save-btn:hover{
+	background-color: lightgray;
 }
