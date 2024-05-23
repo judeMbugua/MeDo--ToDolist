@@ -2,9 +2,6 @@
 .home-container{
 	width: inherit;
 	position: absolute;
-	height: 20rem;
-	margin-top: 1rem;
-	margin-top: auto;
 	height: fit-content;
 	margin-top: 6rem;
 }
@@ -72,7 +69,7 @@
 	margin-top: 5rem;
 	padding-block-end: 1rem;
 	margin-left: .5rem;
-	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
 }
 
 
@@ -107,7 +104,7 @@
 	border-bottom-style: dashed;
 	border-left: none;
 	border-right: none;
-	att
+	
 }
 
 
@@ -119,6 +116,7 @@
 	margin: auto;
 	scrollbar-width: none;
 	overflow-y: auto;
+	background-color: inherit;
 
 }
 
@@ -257,7 +255,6 @@
 .list-save-btn{
 	float: left;
 	margin-left: -2rem;
-	box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 	border: none;
 	cursor: pointer;
 	border-radius: .4rem;
